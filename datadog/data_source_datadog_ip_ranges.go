@@ -148,6 +148,7 @@ func dataSourceDatadogIPRangesRead(ctx context.Context, d *schema.ResourceData, 
 	agents := ipAddressesPtr.GetAgents()
 	api := ipAddressesPtr.GetApi()
 	apm := ipAddressesPtr.GetApm()
+	global := ipAddressesPtr.GetGlobal()
 	logs := ipAddressesPtr.GetLogs()
 	process := ipAddressesPtr.GetProcess()
 	synthetics := ipAddressesPtr.GetSynthetics()
@@ -160,7 +161,8 @@ func dataSourceDatadogIPRangesRead(ctx context.Context, d *schema.ResourceData, 
 		len(api.GetPrefixesIpv6())+len(apm.GetPrefixesIpv6())+
 		len(logs.GetPrefixesIpv6())+len(process.GetPrefixesIpv6())+
 		len(synthetics.GetPrefixesIpv6())+len(webhook.GetPrefixesIpv6())+
-		len(synthetics.GetPrefixesIpv4ByLocation())+len(synthetics.GetPrefixesIpv6ByLocation()) > 0 {
+		len(synthetics.GetPrefixesIpv4ByLocation())+len(synthetics.GetPrefixesIpv6ByLocation())+
+		len(global.GetPrefixesIpv4())+len(global.GetPrefixesIpv6()) > 0 {
 		d.SetId("datadog-ip-ranges")
 	}
 
@@ -169,6 +171,7 @@ func dataSourceDatadogIPRangesRead(ctx context.Context, d *schema.ResourceData, 
 	d.Set("agents_ipv4", agents.GetPrefixesIpv4())
 	d.Set("api_ipv4", api.GetPrefixesIpv4())
 	d.Set("apm_ipv4", apm.GetPrefixesIpv4())
+	d.Set("global_ipv4", global.GetPrefixesIpv4())
 	d.Set("logs_ipv4", logs.GetPrefixesIpv4())
 	d.Set("process_ipv4", process.GetPrefixesIpv4())
 	d.Set("synthetics_ipv4", synthetics.GetPrefixesIpv4())
@@ -178,6 +181,7 @@ func dataSourceDatadogIPRangesRead(ctx context.Context, d *schema.ResourceData, 
 	d.Set("agents_ipv6", agents.GetPrefixesIpv6())
 	d.Set("api_ipv6", api.GetPrefixesIpv6())
 	d.Set("apm_ipv6", apm.GetPrefixesIpv6())
+	d.Set("global_ipv6", global.GetPrefixesIpv6())
 	d.Set("logs_ipv6", logs.GetPrefixesIpv6())
 	d.Set("process_ipv6", process.GetPrefixesIpv6())
 	d.Set("synthetics_ipv6", synthetics.GetPrefixesIpv6())
