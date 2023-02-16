@@ -51,13 +51,17 @@ func (d *APIKeyDataSource) Metadata(_ context.Context, req datasource.MetadataRe
 
 func (d *APIKeyDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: "Provides a Datadog API Key resource. This can be used to create and manage Datadog API Keys.",
+		Description: "Use this data source to retrieve information about an existing api key.",
 		Attributes: map[string]schema.Attribute{
 			"name": schema.StringAttribute{
 				Description: "Name for API Key.",
 				Optional:    true,
 			},
-			"id": utils.ResourceIDAttribute(),
+			"id": schema.StringAttribute{
+				Description: "The ID of this resource.",
+				Optional:    true,
+				Computed:    true,
+			},
 			"key": schema.StringAttribute{
 				Description: "The value of the API Key.",
 				Computed:    true,
