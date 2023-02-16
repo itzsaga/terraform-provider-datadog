@@ -38,7 +38,7 @@ func dataSourceDatadogIPRanges() *schema.Resource {
 				Elem:        &schema.Schema{Type: schema.TypeString},
 			},
 			"global_ipv4": {
-				Description: "An Array of IPv4 addresses in CIDR format specifying the A records for the ??? endpoint.",
+				Description: "An Array of IPv4 addresses in CIDR format specifying the A records for all endpoints.",
 				Type:        schema.TypeList,
 				Computed:    true,
 				Elem:        &schema.Schema{Type: schema.TypeString},
@@ -92,7 +92,7 @@ func dataSourceDatadogIPRanges() *schema.Resource {
 				Elem:        &schema.Schema{Type: schema.TypeString},
 			},
 			"global_ipv6": {
-				Description: "An Array of IPv6 addresses in CIDR format specifying the A records for the ??? endpoint.",
+				Description: "An Array of IPv6 addresses in CIDR format specifying the A records for all endpoints.",
 				Type:        schema.TypeList,
 				Computed:    true,
 				Elem:        &schema.Schema{Type: schema.TypeString},
