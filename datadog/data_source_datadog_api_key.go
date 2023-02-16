@@ -7,6 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+
 	"github.com/terraform-providers/terraform-provider-datadog/datadog/internal/utils"
 )
 
@@ -56,11 +57,7 @@ func (d *APIKeyDataSource) Schema(_ context.Context, _ datasource.SchemaRequest,
 				Description: "Name for API Key.",
 				Optional:    true,
 			},
-			"id": schema.StringAttribute{
-				Description: "The ID of this resource.",
-				Optional:    true,
-				Computed:    true,
-			},
+			"id": utils.ResourceIDAttribute(),
 			"key": schema.StringAttribute{
 				Description: "The value of the API Key.",
 				Computed:    true,
@@ -99,11 +96,11 @@ func (d *APIKeyDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 		apiKeysData := apiKeysResponse.GetData()
 
 		if len(apiKeysData) > 1 {
-			resp.Diagnostics.Append(utils.FrameworkErrorDiag(err, "your query returned more than one result, please try a more specific search criteria"))
+			resp.Diagnostics.AddError("your query returned more than one result, please try a more specific search criteria", "")
 			return
 		}
 		if len(apiKeysData) == 0 {
-			resp.Diagnostics.Append(utils.FrameworkErrorDiag(err, "your query returned no result, please try a less specific search criteria"))
+			resp.Diagnostics.AddError("your query returned no result, please try a less specific search criteria", "")
 			return
 		}
 
